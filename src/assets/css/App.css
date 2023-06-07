@@ -1,0 +1,281 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+div {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.clear {
+  clear: both;
+}
+
+/* login, signup */
+#log-in-content,
+#sign-up-content {
+  margin: 40px 0 80px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#log-in-content .log-in-body,
+#sign-up-content .sign-up-body {
+  margin-right: 300px;
+}
+
+#sign-up-content .sign-up-heading {
+  margin-bottom: 40px;
+  color: #12263f;
+  text-align: center;
+  font-weight: 550;
+  font-size: 38px;
+  letter-spacing: 2px;
+}
+
+#log-in-content .first-line #log-in-content .second-line,
+#sign-up-content .second-line,
+#sign-up-content .first-line {
+  display: flex;
+  margin-bottom: 30px;
+}
+
+/* #log-in-content .log-in-pass,
+#log-in-content .log-in-email,
+#sign-up-content .sign-up-pass,
+#sign-up-content .sign-up-name,
+#sign-up-content .sign-up-address {
+  margin-right: 50px;
+} */
+
+.line {
+  width: 170px;
+}
+
+input[type=text],
+input[type=email],
+input[type=password] {
+  /* width: 100%; */
+  padding: 12px 10px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  letter-spacing: 1px;
+  width: 300px;
+}
+
+/* input[type=submit] {
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+} */
+
+#log-in-content label,
+#sign-up-content label {
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+#log-in-content span,
+#sign-up-content span {
+  color: red;
+  font-weight: bold;
+}
+
+#log-in-content p,
+#sign-up-content p {
+  /* margin-top: 12px; */
+  color: #95aac9;
+
+}
+
+#log-in-content p a,
+#sign-up-content p a {
+  text-decoration: none;
+  color: blue;
+}
+
+#log-in-content p a:hover,
+#sign-up-content p a:hover {
+  color: #6b5eae;
+  cursor: pointer;
+}
+
+#log-in-content .log-in-email,
+#log-in-content .log-in-pass {
+  margin-bottom: 30px;
+}
+
+#log-in-content .log-in-heading {
+  margin-bottom: 40px;
+  color: #12263f;
+  /* text-align: center; */
+  font-weight: 550;
+  font-size: 38px;
+  letter-spacing: 2px;
+}
+
+#sign-up-content .btn-login,
+#log-in-content .btn-login {
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 20px 0 0 95px;
+}
+
+#log-in-content .btn-login:hover {
+  background-color: #45a049;
+
+}
+
+#log-in-content .if-log {
+  margin-top: 42px;
+}
+
+#sign-up-content .first-line {
+  display: inline-block;
+}
+
+/* login, signup */
+
+/* header/ */
+
+#header {
+  height: 84px;
+  width: 100%;
+  padding-top: 8px;
+  border-bottom: 0.8px;
+  border-bottom-color: #cce7ff;
+  border-bottom-style: solid;
+  text-decoration: none;
+}
+
+#header .nav {
+  display: flex;
+  align-items: center;
+  margin: 0 0 0 260px;
+}
+
+#header .nav .list li {
+  display: inline-block;
+}
+
+#header .nav .login li a,
+#header .nav .list li a {
+  text-decoration: none;
+  color: #6e84a3;
+  line-height: 44px;
+  padding: 0 12px;
+}
+
+#header .nav .login li:hover a,
+#header .nav .list li:hover a {
+  color: #000;
+}
+
+#header .nav .list .film {
+  position: relative;
+  /* pointer-events: none; */
+}
+
+#header .nav .list .sub-list-film {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  min-width: 160px;
+}
+
+#header .nav .sub-list-film a {}
+
+#header .nav .film:hover .sub-list-film {
+  display: inline-block;
+  color: #6e84a3;
+}
+
+#header .logo {
+  display: block;
+  width: 84px;
+  margin: 0 60px 0 20px;
+}
+
+#header .logo .img-logo {
+  width: 120%;
+  cursor: pointer;
+}
+
+#header .search {
+  margin-right: 20px;
+}
+
+#header .input-search {
+  border-radius: 10px;
+  border: 1px solid #6e84a3;
+  font-size: 24px;
+  height: 100%;
+  padding-left: 10px;
+
+}
+
+#header .map {
+  font-size: 120%;
+  margin: 0 12px;
+  cursor: pointer;
+}
+
+#header .login li {
+  display: inline-block;
+}
+
+.text-home {
+  height: 720px;
+  letter-spacing: 2px;
+  font-size: 50px;
+  color: #95aac9;
+  padding-left: 110px;
+  padding-top: 150px;
+  background-image: url('../imgs/background/film-background-vector-86883.jpg');
+}
+
+.text-home img {
+  width: 150px;
+}
+
+.home-signup,
+.home-login {
+  font-size: 20px;
+  padding-left: 100px;
+  margin-top: 70px;
+}
+
+.home-signup a,
+.home-login a {
+  cursor: pointer;
+  border: #4CAF50 1px solid;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #4CAF50;
+  color: #fff;
+  text-decoration-line: none;
+}
+
+/* header/ */
