@@ -25,9 +25,9 @@ const Login = () => {
     // }
     const handleLogin = async () => {
         try {
-            const response = await axios.post('http://localhost:5000/api/v1/login', {
+            const response = await axios.post('http://localhost:4000/api/v1/login', {
                 email: email,
-                passwordIn: password
+                passwordIn: password,
             });
 
             // Xử lý phản hồi từ API ở đây
@@ -35,13 +35,17 @@ const Login = () => {
 
             if (response.data.result) {
                 alert('Login successful!');
-                // const root = ReactDOM.createRoot(document.getElementById('root'));
 
-                // root.render(
-                //     <React.StrictMode>
-                //         <HomePage />
-                //     </React.StrictMode>
-                // );
+                // lưu trữ thông tin người dùng
+                localStorage.setItem('user', JSON.stringify(response.data.user));
+
+                // set cookie
+
+                // var d = new Date();
+                // d.setTime(d.getTime() + 1 * 24 * 60 * 60 * 1000);
+                // let expires = "expires =" + d.toUTCString();
+                // document.cookie = "username" + "=" + response.data.user.email + ";" + expires + ";path=/";
+
                 navigate('/homePage');
             }
             else {

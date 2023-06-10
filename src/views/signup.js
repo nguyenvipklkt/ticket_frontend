@@ -17,7 +17,7 @@ const Signup = () => {
 
         try {
             // Gọi API đăng ký tài khoản ở đây
-            const response = await axios.post('http://localhost:5000/api/v1/create-user', {
+            const response = await axios.post('http://localhost:4000/api/v1/create-user', {
                 firstName,
                 lastName,
                 email,
