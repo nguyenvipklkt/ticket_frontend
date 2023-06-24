@@ -9,6 +9,8 @@ import moment from 'moment';
 import lastLogo from '../assets/imgs/Last-Logo/favicon-large.png';
 import beta from '../assets/imgs/Partner/beta-cineplex-v2.jpg';
 import cinemax from '../assets/imgs/Partner/cinemax.png';
+import { useNavigate } from "react-router-dom";
+
 
 const BuyTicket = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -16,6 +18,8 @@ const BuyTicket = () => {
     const handleDropdown = () => {
         setIsOpen(!isOpen);
     }
+    // const navigate = useNavigate();
+
 
     // lấy thông tin người dùng đăng nhập
     var user = {};
@@ -30,6 +34,22 @@ const BuyTicket = () => {
     if (filmInLocalStorage) {
         film = JSON.parse(filmInLocalStorage);
     }
+    // chuyển time về utc + 7 
+
+    const convertUTCtoLocalDateTime = (utcString) => {
+        const utcDate = new Date(utcString);
+        const localDate = new Date(utcDate.getTime() + utcDate.getTimezoneOffset() * 60000);
+
+        const year = localDate.getFullYear();
+        const month = String(localDate.getMonth() + 1).padStart(2, '0');
+        const day = String(localDate.getDate()).padStart(2, '0');
+        const hours = String(localDate.getHours() + 7).padStart(2, '0'); // Thêm 7 giờ vào giờ hiện tại
+        const minutes = String(localDate.getMinutes()).padStart(2, '0');
+        const seconds = String(localDate.getSeconds()).padStart(2, '0');
+
+        const localDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        return localDateTime;
+    }
 
     // chuyển chuỗi date về ngày/tháng/năm
     const getFormattedDate = (dateString) => {
@@ -38,6 +58,13 @@ const BuyTicket = () => {
         const month = date.getMonth() + 1;
         const year = date.getFullYear();
         return `${day}/${month}/${year}`;
+    };
+
+    const getFormattedDateAndMonth = (dateString) => {
+        const date = new Date(dateString);
+        const day = date.getDate();
+        const month = date.getMonth() + 1;
+        return `${day}/${month}`;
     };
 
     const getMovieType = (movieType) => {
@@ -68,8 +95,12 @@ const BuyTicket = () => {
     const [format, setFormat] = useState('Định dạng');
     const [choose, setChoose] = useState(false);
     const [isShow, setIsShow] = useState(false);
-    const [selectedItem, setSelectedItem] = useState(null);
-    const [clicked, setClicked] = useState(null);
+    // const [selectedItem, setSelectedItem] = useState(null);
+    // const [clicked, setClicked] = useState(null);
+    var [time, setTime] = useState([]);
+
+    var times = [];
+
     const showLocation = () => {
         setIsShow(!isShow)
     }
@@ -82,19 +113,55 @@ const BuyTicket = () => {
     // lấy dữ liệu dataCinema từ backend
     const [dataCinema, setDataCinema] = useState([]);
 
-    const times = ['19:00', '20:00', '20:40', '21:20', '22:20', '23:00', '23:40', '23:55']
-
     useEffect(() => {
         axios.get("http://localhost:4000/api/v1/cinemas")
             .then(response => {
                 const jsonData = JSON.parse(JSON.stringify(response.data.dataCinema));
                 setDataCinema(jsonData); // Dữ liệu đã được chuyển đổi thành đối tượng JSON
-                console.log(jsonData);
+                // console.log(jsonData);
             })
             .catch(error => {
                 console.error(error);
             });
     }, []);
+
+    // lấy dữ liệu data schedule từ backend
+
+    // const [dataSchedules, setDataSchedules] = useState([]);
+
+    // useEffect(() => {
+    //     axios.get("http://localhost:4000/api/v1/schedules")
+    //         .then(response => {
+    //             const jsonData = JSON.parse(JSON.stringify(response.data.dataSchedules));
+    //             setDataSchedules(jsonData); // Dữ liệu đã được chuyển đổi thành đối tượng JSON
+    //             // console.log(jsonData);
+    //         })
+    //         .catch(error => {
+    //             console.error(error);
+    //         });
+    // }, []);
+
+    const [showDate, setShowDate] = useState([]);
+    const [dataIdCinema, setDataIdCinema] = useState([])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.post('http://localhost:4000/api/v1/getShowDateAndIdCinema', { idFilm: film.idFilm });
+                const data = response.data.dataShowDate;
+                setShowDate(data);
+                const dataCi = response.data.dataIdCinema;
+                setDataIdCinema(dataCi);
+                // console.log(setShowDate);
+            } catch (error) {
+                console.error('Lỗi khi gọi API:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+
 
     const getCinemaById = (id) => {
         return dataCinema.find(cinema => cinema.idCinema === id);
@@ -103,7 +170,11 @@ const BuyTicket = () => {
     // tạo mảng idCinemas chứa idCinema
     const idCinemas = dataCinema.map(cinema => cinema.idCinema);
     const CinemasCard = ({ id }) => {
+        const navigate = useNavigate();
         const cinema = getCinemaById(id);
+        const handleSelectTicket = () => {
+            navigate('/selectTicket');
+        }
         return (
             <div>
                 <li>
@@ -117,9 +188,24 @@ const BuyTicket = () => {
                     </div>
                     <div>
                         <ul className='ul-child'>
-                            {times.map((time) => (
-                                <li>{time}</li>
-                            ))}
+                            {showDate.map((showDate, index) => {
+                                const formattedDate = JSON.stringify(showDate).substring(13, 23);
+                                const formattedTime = JSON.stringify(showDate).substring(13, 37);
+                                const dateParts = formattedDate.split("-");
+                                const reversedDate = dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0];
+                                const time = convertUTCtoLocalDateTime(formattedTime).substring(11, 16);
+                                if (nextDays.includes(reversedDate)) {
+                                    return (
+                                        <div >
+                                            <li key={index} onClick={handleSelectTicket}>{time}</li>
+                                        </div>
+                                    )
+                                }
+                            }
+                            )}
+                            {/* {times.map((item, index) => (
+                                <li key={index}>{item}</li>
+                            ))} */}
                         </ul>
                     </div>
                 </li>
@@ -128,17 +214,19 @@ const BuyTicket = () => {
     }
 
 
+
     // Lấy ngày hôm nay
     const today = moment().format('DD/MM');
 
     // Lấy 4 ngày tiếp theo
     const nextDays = [];
     for (let i = 1; i <= 6; i++) {
-        const nextDay = moment().add(i, 'days').format('DD/MM');
+        const nextDay = moment().add(i, 'days').format('DD/MM/YYYY');
         nextDays.push(nextDay);
     }
-
-
+    // console.log(nextDays);
+    // const date = new Date(showDate)
+    // const formattedDate = date.toLocaleDateString()
     return (
         <div>
             {/* header  */}
@@ -256,8 +344,9 @@ const BuyTicket = () => {
             {/* thời gian  */}
             <div class="time">
                 <ul>
+
                     {nextDays.map((day, index) => (
-                        <li onClick={() => setSelectedItem(index)} style={{ backgroundColor: selectedItem === index ? '#C7D6EC' : '#EDF2F9' }}>{day}</li>
+                        <li >{day}</li>
                         // <li key={index}>{day}</li>
                     ))}
                 </ul>
