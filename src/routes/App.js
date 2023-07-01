@@ -6,6 +6,7 @@ import Signup from '../views/signup';
 import HomePage from '../views/homePage';
 import BuyTicket from '../views/buyTicket';
 import SelectTicket from '../views/selectTicket';
+import BookedTicket from '../views/bookedTicket';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path='homePage' element={<HomePage />}></Route>
         <Route path='buyTicket' element={<BuyTicket />}></Route>
         <Route path='selectTicket' element={<SelectTicket />}></Route>
+        <Route path='bookedTicket' element={<BookedTicket />}></Route>
       </Routes>
     </div>
   );

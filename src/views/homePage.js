@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { useNavigate, useParams } from "react-router-dom";
 import '../assets/css/App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretDown, faLocationDot, faTrophy, faCalendarDays, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown, faLocationDot, faTrophy, faCalendarDays, faThumbsUp, faTicket } from '@fortawesome/free-solid-svg-icons';
 import firstLogo from '../assets/imgs/firstLogo/logo.png';
 import axios from "axios";
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -89,7 +89,6 @@ const HomePage = () => {
         const navigate = useNavigate();
         const handleFilm = () => {
             localStorage.setItem('film', JSON.stringify(film));
-            console.log(film);
             navigate('/buyTicket');
         }
         return (
@@ -146,7 +145,7 @@ const HomePage = () => {
                     <div class="search">
                         <input type="text" class="input-search" placeholder="Search..." />
                     </div>
-                    <div class="map"><a>Địa điểm</a><FontAwesomeIcon icon={faLocationDot} /></div>
+                    <div class="map" ><a href="bookedTicket">Vé đã đặt <FontAwesomeIcon icon={faTicket} /></a></div>
                     <div class="helloUser">{user.lastName} {user.firstName}</div>
                 </div>
             </div>

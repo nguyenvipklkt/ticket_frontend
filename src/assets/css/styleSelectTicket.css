@@ -53,9 +53,6 @@
 .num-tk {
     margin-top: 20px;
     text-align: center;
-}
-
-.num-tk {
     padding: 5px 10px;
     border: solid #000 1px;
 }
@@ -79,4 +76,21 @@
 
 .d-block {
     display: block;
+}
+
+.booked {
+    background-color: #ff5722 !important;
+    /* color: #fff; */
+    pointer-events: none;
+}
+
+.total-price {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.hide-tk {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
