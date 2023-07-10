@@ -1,39 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
-import { useNavigate, useParams } from "react-router-dom";
 import '../assets/css/App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretDown, faTrophy, faCalendarDays, faThumbsUp, faTicket, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown, faTicket, faCalendar, faClock, faPersonCircleCheck, faMagnifyingGlass, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import firstLogo from '../assets/imgs/firstLogo/logo.png';
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import 'swiper/css';
 import 'swiper/swiper-bundle.css';
-import reviewContent from '../assets/imgs/review-content/6437c9b674bb8028549539.jpg';
-import member from '../assets/imgs/event/545x415-member-163558-210121-74.jpg';
-import madSaleDay from '../assets/imgs/event/545x415-mad-sale-day-164833-210121-30.jpg';
-import t3vv from '../assets/imgs/event/545x415-t3vv-1-164323-210121-12.jpg';
-import hssv from '../assets/imgs/event/545x415-hssv-165349-210121-45.jpg';
 import lastLogo from '../assets/imgs/Last-Logo/favicon-large.png';
 import beta from '../assets/imgs/Partner/beta-cineplex-v2.jpg';
 import cinemax from '../assets/imgs/Partner/cinemax.png';
 
-const HomePage = () => {
-
-    SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
-
-    const [searchTerm, setSearchTerm] = useState('');
-
-    const [dataFilm, setDataFilm] = useState([]);
-
-    const [isOpen, setIsOpen] = useState(false);
-
-    const navigate = useNavigate();
-
-    const handleDropdown = () => {
-        setIsOpen(!isOpen);
-    }
+const NowFilm = () => {
 
     // get user is loging
     var user = {};
@@ -42,12 +23,24 @@ const HomePage = () => {
         user = JSON.parse(userInLocalStorage);
     }
 
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const navigate = useNavigate();
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const handleDropdown = () => {
+        setIsOpen(!isOpen);
+    }
+
+    const [nowFilm, setNowFilm] = useState([]);
+
     // lấy dữ liệu dataFilm từ backend
     useEffect(() => {
-        axios.get("http://localhost:4000/api/v1/films")
+        axios.get("http://localhost:4000/api/v1/films/now-showing")
             .then(response => {
-                const jsonData = JSON.parse(JSON.stringify(response.data.dataFilm));
-                setDataFilm(jsonData); // Dữ liệu đã được chuyển đổi thành đối tượng JSON
+                const jsonData = JSON.parse(JSON.stringify(response.data.films));
+                setNowFilm(jsonData); // Dữ liệu đã được chuyển đổi thành đối tượng JSON
             })
             .catch(error => {
                 console.error(error);
@@ -55,10 +48,10 @@ const HomePage = () => {
     }, []);
 
     // tạo mảng idFilms chứa idFilm
-    const idFilms = dataFilm.map(film => film.idFilm);
+    const idFilms = nowFilm.map(film => film.idFilm);
 
     const getFilmById = (id) => {
-        return dataFilm.find(film => film.idFilm === id);
+        return nowFilm.find(film => film.idFilm === id);
     };
 
     // chuyển chuỗi releaseDate về chuỗi chỉ gồm ngày và tháng
@@ -96,7 +89,6 @@ const HomePage = () => {
         }
     };
 
-
     // tạo thẻ film hiển thị trên web
     const Card = ({ id }) => {
         const film = getFilmById(id);
@@ -129,9 +121,9 @@ const HomePage = () => {
             </div>
         );
     };
+
     return (
-        <div id="homePage">
-            {/* header  */}
+        <div>
             <div id="header">
                 <div class="nav">
                     <ul class="list">
@@ -163,17 +155,14 @@ const HomePage = () => {
                     <div class="helloUser">{user.lastName} {user.firstName}</div>
                 </div>
             </div>
-
-            {/* header  */}
-
             {/* content */}
             <div id="content">
                 <div class="heading-content">
                     <div class="container">
-
                         {/* text center */}
+
                         <h2 class="text-center">
-                            <a href="" class="text-now-film"><FontAwesomeIcon icon={faTrophy} /> Top thịnh hành</a>
+                            <a href="" class="text-now-film">Phim trong tuần</a>
                         </h2>
                         {/* text center */}
 
@@ -196,59 +185,6 @@ const HomePage = () => {
                             </div>
                         </Swiper>
                         {/* card  */}
-
-                        {/* review  */}
-                        <div class="review-content">
-                            <div class="review">
-                                <div class="img-review-content">
-                                    <img src={reviewContent} alt="" />
-                                </div>
-                                <div class="text-review-content">
-                                    <a href="" class="big-text-review-content">Xem gì cuối tuần ngày 14.04 - Thêm liền 5 tựa
-                                        phim này
-                                        vào kế hoạch của bạn</a>
-                                    <div href="" class="small-text-review-content">
-                                        <a href="" class="inf-review-content">Tin điện ảnh · Ivy_Trat </a>
-                                        <div class="time-review-content">· 1 ngày trước</div>
-                                    </div>
-                                    <div class="subtitle-content-review">Truyền cảm hứng như Air đến kinh dị hài như
-                                        Renfield, gọi tuổi thơ về với Slam Dunk, đừng bỏ qua 5 tựa phim này nha!</div>
-                                </div>
-                            </div>
-                        </div>
-                        {/* review  */}
-
-                        {/* event  */}
-                        <div class="event-content">
-                            <div class="text-event">
-                                <FontAwesomeIcon icon={faCalendarDays} />
-                                Sự kiện
-                            </div>
-                            <div class="sub-text-event">
-                                Thành viên Moveek với các ưu đãi
-                            </div>
-                            <div class="inf-event-content">
-                                <ul class="image-event">
-                                    <li>
-                                        <img src={member} alt="" />
-                                        <p class="title-event">THÀNH VIÊN BETA - ĐỒNG GIÁ 45K/50K</p>
-                                    </li>
-                                    <li>
-                                        <img src={madSaleDay} alt="" />
-                                        <p class="title-event">SALE KHÔNG NGỪNG - MỪNG "MAD SALE DAY"</p>
-                                    </li>
-                                    <li>
-                                        <img src={t3vv} alt="" />
-                                        <p class="title-event">THỨ BA VUI VẺ</p>
-                                    </li>
-                                    <li>
-                                        <img src={hssv} alt="" />
-                                        <p class="title-event">GIÁ VÉ ƯU ĐÃI CHO HỌC SINH, SINH VIÊN</p>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        {/* event  */}
                     </div>
                 </div>
             </div>
@@ -285,11 +221,8 @@ const HomePage = () => {
                 </div>
             </div>
             {/* footer */}
-
-        </div >
+        </div>
     )
 }
 
-
-
-export default HomePage;
+export default NowFilm;

@@ -97,7 +97,7 @@ const SelectTicket = () => {
     return (
         <div class="">
 
-            <h2 class="ds-v">Danh sách vé</h2>
+            <h2 class="ds-v">Danh sách vé phòng số {schedule.idCinema}</h2>
             <ul class="list-tk">
                 <li>
                     <button onClick={() => handleTicketClick(1)} className={`seat ${isSeatBooked(1) ? "booked" : ""}`}>1</button>
@@ -256,6 +256,46 @@ const SelectTicket = () => {
                 </li>
                 <li>
                     <button onClick={() => handleTicketClick(48)} className={`seat ${isSeatBooked(48) ? "booked" : ""}`}>48</button>
+                </li>
+            </ul>
+
+            <ul class="list-tk">
+                <li>
+                    <button onClick={() => handleTicketClick(49)} className={`seat ${isSeatBooked(49) ? "booked" : ""}`}>49</button>
+                </li>
+                <li>
+                    <button onClick={() => handleTicketClick(50)} className={`seat ${isSeatBooked(50) ? "booked" : ""}`}>50</button>
+                </li>
+                <li>
+                    <button onClick={() => handleTicketClick(51)} className={`seat ${isSeatBooked(51) ? "booked" : ""}`}>51</button>
+                </li>
+                <li>
+                    <button onClick={() => handleTicketClick(52)} className={`seat ${isSeatBooked(52) ? "booked" : ""}`}>52</button>
+                </li>
+                <li>
+                    <button onClick={() => handleTicketClick(53)} className={`seat ${isSeatBooked(53) ? "booked" : ""}`}>53</button>
+                </li>
+                <li>
+                    <button onClick={() => handleTicketClick(54)} className={`seat ${isSeatBooked(54) ? "booked" : ""}`}>54</button>
+                </li>
+                <li>
+                    <button onClick={() => handleTicketClick(55)} className={`seat ${isSeatBooked(55) ? "booked" : ""}`}>55</button>
+                </li>
+                <li>
+                    <button onClick={() => handleTicketClick(56)} className={`seat ${isSeatBooked(56) ? "booked" : ""}`}>56</button>
+                </li>
+                <li>
+                    <button onClick={() => handleTicketClick(57)} className={`seat ${isSeatBooked(57) ? "booked" : ""}`}>57</button>
+                </li>
+                <li>
+                    <button onClick={() => handleTicketClick(58)} className={`seat ${isSeatBooked(58) ? "booked" : ""}`}>58</button>
+                </li>
+
+                <li>
+                    <button onClick={() => handleTicketClick(59)} className={`seat ${isSeatBooked(59) ? "booked" : ""}`}>59</button>
+                </li>
+                <li>
+                    <button onClick={() => handleTicketClick(60)} className={`seat ${isSeatBooked(60) ? "booked" : ""}`}>60</button>
                 </li>
             </ul>
 

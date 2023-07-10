@@ -57,6 +57,22 @@ const BookedTicket = () => {
         }
     }
 
+    function formatDateTime(dateTimeStr) {
+        const dateTime = new Date(dateTimeStr);
+
+        const hours = dateTime.getHours();
+        const minutes = dateTime.getMinutes();
+        const timeStr = `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}`;
+
+        const day = dateTime.getDate();
+        const month = dateTime.getMonth() + 1;
+        const year = dateTime.getFullYear();
+        const dateStr = `${day < 10 ? '0' + day : day}-${month < 10 ? '0' + month : month}-${year}`;
+
+        return `${timeStr}`;
+
+    }
+
     const Ticket = ({ id }) => {
 
         const ticket = getTicketById(id);
@@ -76,7 +92,7 @@ const BookedTicket = () => {
                 </div>
                 <div class="ticket-info">
                     <span class="ticket-label">Giờ chiếu : </span>
-                    <span class="ticket-value">20:00</span>
+                    <span class="ticket-value">{formatDateTime(ticket.showDate)}</span>
                 </div>
                 <div class="ticket-info">
                     <span class="ticket-label">Ghế : </span>

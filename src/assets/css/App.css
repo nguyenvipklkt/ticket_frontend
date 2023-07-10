@@ -235,6 +235,21 @@ input[type=submit]:hover {
 
 #header .search {
   margin-right: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+#header .search button {
+  /* border-radius: 10px;
+  border: 1px solid #6e84a3; */
+  font-size: 24px;
+  height: 100%;
+  /* padding-left: 10px; */
+  margin-left: 20px;
+  color: #6e84a3;
+  border: none;
+  background-color: #fff;
+
 }
 
 #header .input-search {
@@ -931,6 +946,7 @@ input[type=submit]:hover {
 
 .cine-info {
   margin-top: 10px;
+  margin-left: 20px;
 }
 
 .cine-info p {

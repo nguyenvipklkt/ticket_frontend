@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import '../assets/css/App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretDown, faLocationDot, faCalendar, faClock, faPersonCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown, faTicket, faCalendar, faClock, faPersonCircleCheck, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import firstLogo from '../assets/imgs/firstLogo/logo.png';
 import axios from 'axios';
-import moment from 'moment';
 import lastLogo from '../assets/imgs/Last-Logo/favicon-large.png';
 import beta from '../assets/imgs/Partner/beta-cineplex-v2.jpg';
 import cinemax from '../assets/imgs/Partner/cinemax.png';
@@ -14,6 +13,11 @@ import { useNavigate } from "react-router-dom";
 
 const BuyTicket = () => {
     const [isOpen, setIsOpen] = useState(false);
+
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const navigate = useNavigate();
+
 
     const handleDropdown = () => {
         setIsOpen(!isOpen);
@@ -118,10 +122,11 @@ const BuyTicket = () => {
 
     }
 
+
+
     // tạo mảng idCinemas chứa idCinema
     const idCinemas = dataCinema.map(cinema => cinema.idCinema);
     const CinemasCard = ({ id }) => {
-        const navigate = useNavigate();
         const cinema = getCinemaById(id);
         //lấy dữ liệu data schedule từ backend
 
@@ -139,12 +144,16 @@ const BuyTicket = () => {
                 });
         }, []);
 
+        useEffect(() => {
+            axios.get('http://localhost:4000/api/v1/updateStatusSchedule');
+        }, []);
+
         return (
             <div>
                 <li>
                     <div className='info-container'>
                         <div className='cine-logo'>
-                            <img src={cinema.logo} class='cinema-logo' alt=''></img>
+                            {/* <img src={cinema.logo} class='cinema-logo' alt=''></img> */}
                             <div className="cine-info">
                                 <p style={{ fontWeight: 600 }}>{cinema.showRoom}</p>
                             </div>
@@ -172,6 +181,25 @@ const BuyTicket = () => {
         )
     }
 
+    // tìm kiếm film
+    const handleSearch = async () => {
+        try {
+            const response = await axios.get(`http://localhost:4000/api/v1/searchFilm/${searchTerm}`);
+            const films = response.data.films;
+            // Chuyển hướng đến trang kết quả tìm kiếm và truyền dữ liệu qua props
+            if (response.data.message == 'name is empty' || !response.data.message) {
+                alert("Nội dung tìm kiếm không chính xác");
+            }
+            else {
+                localStorage.setItem('searchedFilm', JSON.stringify(films));
+                navigate('/searchedFilm');
+            }
+        } catch (error) {
+            alert("Nội dung tìm kiếm không chính xác");
+            console.error(error);
+        }
+    };
+
     return (
         <div>
             {/* header  */}
@@ -185,8 +213,8 @@ const BuyTicket = () => {
                             {
                                 isOpen && (
                                     <ul class="sub-list-film">
-                                        <li><a href="">Đang chiếu</a></li>
-                                        <li><a href="">Sắp chiếu</a></li>
+                                        <li><a href="nowFilm">Đang chiếu</a></li>
+                                        <li><a href="futureFilm">Sắp chiếu</a></li>
                                     </ul>
                                 )
                             }
@@ -196,12 +224,13 @@ const BuyTicket = () => {
                         </li>
                     </ul>
                     <div class="logo">
-                        <a href=""><img src={firstLogo} alt="img" class="img-logo" /></a>
+                        <a href="homePage"><img src={firstLogo} alt="img" class="img-logo" /></a>
                     </div>
                     <div class="search">
-                        <input type="text" class="input-search" placeholder="Search..." />
+                        <input type="text" class="input-search" placeholder="..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
+                        <button onClick={handleSearch}><FontAwesomeIcon icon={faMagnifyingGlass} /></button>
                     </div>
-                    <div class="map"><a>Địa điểm</a><FontAwesomeIcon icon={faLocationDot} /></div>
+                    <div class="map" ><a href="bookedTicket"> <FontAwesomeIcon icon={faTicket} /> Vé đã đặt</a></div>
                     <div class="helloUser">{user.lastName} {user.firstName}</div>
                 </div>
             </div>
