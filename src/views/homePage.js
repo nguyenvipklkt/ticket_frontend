@@ -135,7 +135,7 @@ const HomePage = () => {
             <div id="header">
                 <div class="nav">
                     <ul class="list">
-                        <li><a href="">Mua vé</a></li>
+                        <li><a href="typeFilm">Mua vé</a></li>
                         <li><a href="">Lịch chiếu</a></li>
                         <li class="film">
                             <div class="header-film" href="" onClick={handleDropdown}>Phim <FontAwesomeIcon icon={faCaretDown} onClick={handleDropdown} /></div>

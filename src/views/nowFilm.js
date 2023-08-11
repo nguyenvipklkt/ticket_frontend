@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import '../assets/css/App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretDown, faTicket, faCalendar, faClock, faPersonCircleCheck, faMagnifyingGlass, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown, faTicket, faCalendar, faClock, faPersonCircleCheck, faMagnifyingGlass, faThumbsUp, faCalendarDays } from '@fortawesome/free-solid-svg-icons';
 import firstLogo from '../assets/imgs/firstLogo/logo.png';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
@@ -13,6 +13,10 @@ import 'swiper/swiper-bundle.css';
 import lastLogo from '../assets/imgs/Last-Logo/favicon-large.png';
 import beta from '../assets/imgs/Partner/beta-cineplex-v2.jpg';
 import cinemax from '../assets/imgs/Partner/cinemax.png';
+import member from '../assets/imgs/event/545x415-member-163558-210121-74.jpg';
+import madSaleDay from '../assets/imgs/event/545x415-mad-sale-day-164833-210121-30.jpg';
+import t3vv from '../assets/imgs/event/545x415-t3vv-1-164323-210121-12.jpg';
+import hssv from '../assets/imgs/event/545x415-hssv-165349-210121-45.jpg';
 
 const NowFilm = () => {
 
@@ -34,6 +38,11 @@ const NowFilm = () => {
     }
 
     const [nowFilm, setNowFilm] = useState([]);
+    const [movieType, setMovieType] = useState('');
+
+    const handleGenreChange = (event) => {
+        setMovieType(event.target.value);
+    };
 
     // lấy dữ liệu dataFilm từ backend
     useEffect(() => {
@@ -96,6 +105,7 @@ const NowFilm = () => {
             localStorage.setItem('film', JSON.stringify(film));
             navigate('/buyTicket');
         }
+
         return (
             <div>
                 <div class="card first-card">
@@ -120,6 +130,7 @@ const NowFilm = () => {
                 </div>
             </div>
         );
+
     };
 
     return (
@@ -127,7 +138,7 @@ const NowFilm = () => {
             <div id="header">
                 <div class="nav">
                     <ul class="list">
-                        <li><a href="">Mua vé</a></li>
+                        <li><a href="typeFilm">Mua vé</a></li>
                         <li><a href="">Lịch chiếu</a></li>
                         <li class="film">
                             <div class="header-film" href="" onClick={handleDropdown}>Phim <FontAwesomeIcon icon={faCaretDown} onClick={handleDropdown} /></div>
@@ -166,6 +177,20 @@ const NowFilm = () => {
                         </h2>
                         {/* text center */}
 
+                        {/* option */}
+                        {/* <div className='option-MovieType'>
+                            <label for="movieType">Chọn thể loại : </label>
+
+                            <select id="movieType" value={movieType} onChange={handleGenreChange} required>
+                                <option value="">Chọn thể loại</option>
+                                <option value="1">Hành động</option>
+                                <option value="2">Tình cảm</option>
+                                <option value="3">Hoạt hình</option>
+                                <option value="4">Kinh dị</option>
+                            </select>
+                        </div> */}
+                        {/* option */}
+
                         {/* card  */}
                         <Swiper
                             navigation
@@ -185,6 +210,35 @@ const NowFilm = () => {
                             </div>
                         </Swiper>
                         {/* card  */}
+                    </div>
+                </div>
+                <div class="event-content">
+                    <div class="text-event">
+                        <FontAwesomeIcon icon={faCalendarDays} />
+                        Sự kiện
+                    </div>
+                    <div class="sub-text-event">
+                        Thành viên Moveek với các ưu đãi
+                    </div>
+                    <div class="inf-event-content">
+                        <ul class="image-event">
+                            <li>
+                                <img src={member} alt="" />
+                                <p class="title-event">THÀNH VIÊN BETA - ĐỒNG GIÁ 45K/50K</p>
+                            </li>
+                            <li>
+                                <img src={madSaleDay} alt="" />
+                                <p class="title-event">SALE KHÔNG NGỪNG - MỪNG "MAD SALE DAY"</p>
+                            </li>
+                            <li>
+                                <img src={t3vv} alt="" />
+                                <p class="title-event">THỨ BA VUI VẺ</p>
+                            </li>
+                            <li>
+                                <img src={hssv} alt="" />
+                                <p class="title-event">GIÁ VÉ ƯU ĐÃI CHO HỌC SINH, SINH VIÊN</p>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>

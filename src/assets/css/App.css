@@ -1024,3 +1024,25 @@ input[type=submit]:hover {
 }
 
 /* bookedTk */
+
+/* option */
+
+.option-MovieType {
+  color: #6e84a3;
+  margin-bottom: 40px;
+  margin-left: 70px;
+}
+
+.option-MovieType select {
+  padding: 12px 10px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  letter-spacing: 1px;
+  width: 300px;
+  color: #6e84a3;
+}
+
+/* option */
